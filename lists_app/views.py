@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from .models import Profile
 from .forms import SignUpForm
-from django.http import HttpResponse
 
 def index(request):
     return render(request, 'index.html')
 
 def signup(request):
     if request.user.is_authenticated:
-        return redirect('homepage')
+        return redirect('index')
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
@@ -25,7 +25,7 @@ def signup(request):
             user = authenticate(username=username, password=password)
             login(request, user)
             print("signed up")
-            return redirect('homepage')
+            return redirect('index')
         else:
             return render(request, 'registration/signup.html', {'form': form})
     else:
