@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from .models import Profile
@@ -6,7 +6,7 @@ from .forms import SignUpForm
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("welcome to the lists app")
+    return render(request, 'index.html')
 
 def signup(request):
     if request.user.is_authenticated:
